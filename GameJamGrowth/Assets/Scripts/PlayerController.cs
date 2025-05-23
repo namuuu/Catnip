@@ -1,5 +1,6 @@
 using UnityEngine.InputSystem; 
 using UnityEngine;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
@@ -7,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public float speed = 5f;
     public float acceleration = 50f;
     public float deceleration =  70f; 
-    public PlayerInput playerInput; 
+    public PlayerInput playerInput;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,6 +32,16 @@ public class PlayerController : MonoBehaviour
 
     void HandleMovement()
     {
+        // Sprint 
+        playerInput = GetComponent<PlayerInput>();
+        if (playerInput.actions["Sprint"].IsPressed())
+        {
+            speed = 7.5f; // Sprint speed
+        }
+        else
+        {
+            speed = 5f; // Normal speed
+        }
 
         // Speed and acceleration
         Vector2 currentVelocity = rb.linearVelocity; 
@@ -56,12 +67,6 @@ public class PlayerController : MonoBehaviour
         else if (v2.x < 0)
         {
             transform.localScale = new Vector3(-1, 1, 1);
-        }
-
-        // Sprint 
-        if (playerInput.actions["Sprint"].triggered)
-        {
-            v1 *= 1.5f; 
         }
     }
 }
