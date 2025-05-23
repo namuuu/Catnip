@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class SlotController : MonoBehaviour
 {
@@ -8,26 +9,48 @@ public class SlotController : MonoBehaviour
     [Header("Refernces")]
     public PlayerInput playerInput;
     public GameObject hotbar;
+    private Vector3 hotbarOrigin;
 
-    private const int HOTBAR_DISPLAY_MAX = 5;
+    [Header("Hotbar Settings")]
+    public const int HOTBAR_DISPLAY_MAX = 5;
+    public const float PADDING = 120f;
+    private int currentSlotIndex = 0;
+    private int topSlotIndex = 0;
+    private GameObject[] hotbarSlots;
+
+    void OnEnable()
+    {
+        playerInput.actions["1"].performed += SetRelativeSlot;
+        playerInput.actions["2"].performed += SetRelativeSlot;
+        playerInput.actions["3"].performed += SetRelativeSlot;
+        playerInput.actions["4"].performed += SetRelativeSlot;
+        playerInput.actions["5"].performed += SetRelativeSlot;
+        playerInput.actions["6"].performed += SetRelativeSlot;
+
+        hotbarOrigin = hotbar.transform.position;
+    }
+
+    void OnDisable()
+    {
+        playerInput.actions["1"].performed -= SetRelativeSlot;
+        playerInput.actions["2"].performed -= SetRelativeSlot;
+        playerInput.actions["3"].performed -= SetRelativeSlot;
+        playerInput.actions["4"].performed -= SetRelativeSlot;
+        playerInput.actions["5"].performed -= SetRelativeSlot;
+        playerInput.actions["6"].performed -= SetRelativeSlot;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        hotbarSlots = GetHotbarSlots();
 
+        // Change the color of the first slot to red
+        hotbarSlots[currentSlotIndex].GetComponent<Image>().color = Color.red;
+        SetActiveSlot(currentSlotIndex);
     }
 
-    // FixedUpdate is called once per frame
-    void FixedUpdate()
-    {
-        // If left click
-        if (playerInput.actions["Attack"].triggered)
-        {
-            
-        }
-    }
-
-      private GameObject[] getHotbarSlots()
+    private GameObject[] GetHotbarSlots()
     {
         // Get the hotbar slots from the hotbar GameObject
         Transform[] hotbarSlots = hotbar.GetComponentsInChildren<Transform>();
@@ -42,6 +65,57 @@ public class SlotController : MonoBehaviour
 
         return slots;
     }
-    
 
+    private void SetRelativeSlot(InputAction.CallbackContext context)
+    {
+        if (!context.performed)
+            return;
+
+        // Parse the input value to get the relative slot index
+        int relativeSlotIndex = int.Parse(context.action.name) - 1;
+
+        SetActiveSlot(topSlotIndex + relativeSlotIndex);
+    }
+
+    private void SetActiveSlot(int index)
+    {
+        // Debug.Log("Setting active slot to: " + index);
+        if (index < 0 || index >= hotbarSlots.Length)
+            return;
+
+        MoveToActiveSlot(index);
+
+        // Change previous slot to color white
+        hotbarSlots[currentSlotIndex].GetComponent<Image>().color = Color.white;
+
+        // Change current slot to color red
+        hotbarSlots[index].GetComponent<Image>().color = Color.red;
+        currentSlotIndex = index;
+    }
+
+    // Slides the hotbar so the active slot is in the middle of the screen
+    private void MoveToActiveSlot(int index)
+    {
+        // Check if the index is out of bounds (lower bound)
+        if (index + 1 >= topSlotIndex + HOTBAR_DISPLAY_MAX)
+        {
+            // Is it the last slot?
+            if (index == hotbarSlots.Length - 1)
+                topSlotIndex = index - HOTBAR_DISPLAY_MAX + 1;
+            else
+                topSlotIndex = index - HOTBAR_DISPLAY_MAX + 2;
+        }
+
+        // Check if the index is out of bounds (upper bound)
+        if (index <= topSlotIndex)
+        {
+            // Is it the first slot?
+            if (index == 0)
+                topSlotIndex = index;
+            else
+                topSlotIndex = index - 1;
+        }
+
+        hotbar.transform.DOMoveY(hotbarOrigin.y + topSlotIndex * PADDING, 0.5f);
+    }
 }
