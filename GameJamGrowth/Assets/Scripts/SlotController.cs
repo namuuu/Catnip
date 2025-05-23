@@ -9,15 +9,35 @@ public class SlotController : MonoBehaviour
     [Header("Refernces")]
     public PlayerInput playerInput;
     public GameObject hotbar;
+    private Vector3 hotbarOrigin;
 
-    private const int HOTBAR_DISPLAY_MAX = 5;
+    [Header("Hotbar Settings")]
+    public const int HOTBAR_DISPLAY_MAX = 5;
+    public const float PADDING = 120f;
     private int currentSlotIndex = 0;
     private int topSlotIndex = 0;
     private GameObject[] hotbarSlots;
 
     void OnEnable()
     {
-        playerInput.actions["Interact"].performed += OnInteract;
+        playerInput.actions["1"].performed += SetRelativeSlot;
+        playerInput.actions["2"].performed += SetRelativeSlot;
+        playerInput.actions["3"].performed += SetRelativeSlot;
+        playerInput.actions["4"].performed += SetRelativeSlot;
+        playerInput.actions["5"].performed += SetRelativeSlot;
+        playerInput.actions["6"].performed += SetRelativeSlot;
+
+        hotbarOrigin = hotbar.transform.position;
+    }
+
+    void OnDisable()
+    {
+        playerInput.actions["1"].performed -= SetRelativeSlot;
+        playerInput.actions["2"].performed -= SetRelativeSlot;
+        playerInput.actions["3"].performed -= SetRelativeSlot;
+        playerInput.actions["4"].performed -= SetRelativeSlot;
+        playerInput.actions["5"].performed -= SetRelativeSlot;
+        playerInput.actions["6"].performed -= SetRelativeSlot;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -27,48 +47,7 @@ public class SlotController : MonoBehaviour
 
         // Change the color of the first slot to red
         hotbarSlots[currentSlotIndex].GetComponent<Image>().color = Color.red;
-
-        for (int i = 0; i < hotbarSlots.Length; i++)
-        {
-            // if (i < topSlotIndex)
-            // {
-            //     hotbarSlots[i].SetActive(false);
-            //     continue;
-            // }
-
-            // if (i >= topSlotIndex + HOTBAR_DISPLAY_MAX)
-            // {
-            //     hotbarSlots[i].SetActive(false);
-            //     continue;
-            // }
-
-            // hotbarSlots[i].SetActive(true);            
-        }
-    }
-
-    // FixedUpdate is called once per frame
-    void FixedUpdate()
-    {
-        
-    }
-
-    private void OnInteract(InputAction.CallbackContext context)
-    {
-        // Check if the action is triggered
-        if (context.performed)
-        {
-            // Get the current slot index
-            int newSlotIndex = currentSlotIndex + 1;
-
-            // Check if the new slot index is within bounds
-            if (newSlotIndex >= hotbarSlots.Length)
-            {
-                newSlotIndex = 0;
-            }
-
-            // Set the active slot
-            SetActiveSlot(newSlotIndex);
-        }
+        SetActiveSlot(currentSlotIndex);
     }
 
     private GameObject[] GetHotbarSlots()
@@ -87,10 +66,20 @@ public class SlotController : MonoBehaviour
         return slots;
     }
 
+    private void SetRelativeSlot(InputAction.CallbackContext context)
+    {
+        if (!context.performed)
+            return;
+
+        // Parse the input value to get the relative slot index
+        int relativeSlotIndex = int.Parse(context.action.name) - 1;
+
+        SetActiveSlot(topSlotIndex + relativeSlotIndex);
+    }
+
     private void SetActiveSlot(int index)
     {
         // Debug.Log("Setting active slot to: " + index);
-
         if (index < 0 || index >= hotbarSlots.Length)
             return;
 
@@ -104,6 +93,7 @@ public class SlotController : MonoBehaviour
         currentSlotIndex = index;
     }
 
+    // Slides the hotbar so the active slot is in the middle of the screen
     private void MoveToActiveSlot(int index)
     {
         // Check if the index is out of bounds (lower bound)
@@ -111,43 +101,21 @@ public class SlotController : MonoBehaviour
         {
             // Is it the last slot?
             if (index == hotbarSlots.Length - 1)
-            {
-                // Debug.Log("index: " + index + " topSlotIndex: " + topSlotIndex);
-                // Debug.Log(index - topSlotIndex - HOTBAR_DISPLAY_MAX + 1);
-                hotbar.transform.DOMoveY(hotbar.transform.position.y + (index - topSlotIndex - HOTBAR_DISPLAY_MAX + 1) * 120, 0.5f);
                 topSlotIndex = index - HOTBAR_DISPLAY_MAX + 1;
-                // Debug.Log("topSlotIndex: " + topSlotIndex);
-            }
             else
-            {
-                // Debug.Log("index: " + index + " topSlotIndex: " + topSlotIndex);
-                // Debug.Log(index - topSlotIndex - HOTBAR_DISPLAY_MAX + 2);
-                hotbar.transform.DOMoveY(hotbar.transform.position.y + (index - topSlotIndex - HOTBAR_DISPLAY_MAX + 2) * 120, 0.5f);
                 topSlotIndex = index - HOTBAR_DISPLAY_MAX + 2;
-                // Debug.Log("topSlotIndex: " + topSlotIndex);
-            }
         }
 
         // Check if the index is out of bounds (upper bound)
-        if (index < topSlotIndex)
+        if (index <= topSlotIndex)
         {
             // Is it the first slot?
             if (index == 0)
-            {
-                Debug.Log("index: " + index + " topSlotIndex: " + topSlotIndex);
-                Debug.Log(index - topSlotIndex + 1);
-                hotbar.transform.DOMoveY(hotbar.transform.position.y + (index - topSlotIndex) * 120, 0.5f);
                 topSlotIndex = index;
-                Debug.Log("topSlotIndex: " + topSlotIndex);
-            }
             else
-            {
-                Debug.Log("index: " + index + " topSlotIndex: " + topSlotIndex);
-                Debug.Log(index - topSlotIndex);
-                hotbar.transform.DOMoveY(hotbar.transform.position.y + (index - topSlotIndex) * 120, 0.5f);
-                topSlotIndex = index;
-                Debug.Log("topSlotIndex: " + topSlotIndex);
-            }
+                topSlotIndex = index - 1;
         }
+
+        hotbar.transform.DOMoveY(hotbarOrigin.y + topSlotIndex * PADDING, 0.5f);
     }
 }
