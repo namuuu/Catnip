@@ -13,6 +13,16 @@ public class InputPolling : MonoBehaviour
     public static Action<int> OnNumRowPressed;
 
     /// <summary>
+    /// Event that is triggered when left click is pressed.
+    /// </summary>
+    public static Action OnInteract;
+
+    /// <summary>
+    /// Event that is triggered when the right click is pressed.
+    /// summary>
+    public static Action OnInspect;
+
+    /// <summary>
     /// Whether the sprint action is currently pressed.
     /// </summary>
     public static bool sprint;
@@ -30,6 +40,9 @@ public class InputPolling : MonoBehaviour
         playerInput.actions["4"].performed += OnNumRow;
         playerInput.actions["5"].performed += OnNumRow;
         playerInput.actions["6"].performed += OnNumRow;
+
+        playerInput.actions["Interact"].performed += context => OnInteract?.Invoke();
+        playerInput.actions["Inspect"].performed += context => OnInspect?.Invoke();
     }
 
     private void OnDisable()
@@ -40,6 +53,9 @@ public class InputPolling : MonoBehaviour
         playerInput.actions["4"].performed -= OnNumRow;
         playerInput.actions["5"].performed -= OnNumRow;
         playerInput.actions["6"].performed -= OnNumRow;
+
+        playerInput.actions["Interact"].performed -= context => OnInteract?.Invoke();
+        playerInput.actions["Inspect"].performed -= context => OnInspect?.Invoke();
     }
 
     private void Update()
