@@ -6,12 +6,12 @@ public class PlayerController : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField]
     [Tooltip("The speed of the player when not sprinting.")]
-    private readonly float speed = 5f;
+    private float speed = 5f;
     [SerializeField]
     [Tooltip("The maximum speed of the player when sprinting.")]
-    private readonly float maxSpeed = 7.5f; // Maximum speed when sprinting
-    [SerializeField] private readonly float acceleration = 50f;
-    [SerializeField] private readonly float deceleration = 70f;
+    private float maxSpeed = 7.5f; // Maximum speed when sprinting
+    [SerializeField] private float acceleration = 50f;
+    [SerializeField] private float deceleration = 70f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
