@@ -128,4 +128,9 @@ public class SlotController : MonoBehaviour
         GameObject slot = hotbarSlots[index];
         return slot.GetComponentsInChildren<Image>()[1].sprite.name;
     }
+
+    private string GetActiveItem()
+    {
+        return GetItemInSlot(currentSlotIndex);
+    }
 }
