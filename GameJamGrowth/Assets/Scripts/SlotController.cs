@@ -23,24 +23,17 @@ public class SlotController : MonoBehaviour
 
     void OnEnable()
     {
-        playerInput.actions["1"].performed += SetRelativeSlot;
-        playerInput.actions["2"].performed += SetRelativeSlot;
-        playerInput.actions["3"].performed += SetRelativeSlot;
-        playerInput.actions["4"].performed += SetRelativeSlot;
-        playerInput.actions["5"].performed += SetRelativeSlot;
-        playerInput.actions["6"].performed += SetRelativeSlot;
+        InputPolling.OnNumRowPressed += SetRelativeSlot;
 
         hotbarOrigin = hotbar.transform.position;
     }
 
     void OnDisable()
     {
-        playerInput.actions["1"].performed -= SetRelativeSlot;
-        playerInput.actions["2"].performed -= SetRelativeSlot;
-        playerInput.actions["3"].performed -= SetRelativeSlot;
-        playerInput.actions["4"].performed -= SetRelativeSlot;
-        playerInput.actions["5"].performed -= SetRelativeSlot;
-        playerInput.actions["6"].performed -= SetRelativeSlot;
+        InputPolling.OnNumRowPressed -= SetRelativeSlot;
+
+        // Reset the hotbar position when the script is disabled
+        hotbar.transform.position = hotbarOrigin;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -75,16 +68,8 @@ public class SlotController : MonoBehaviour
         return slots;
     }
 
-    private void SetRelativeSlot(InputAction.CallbackContext context)
+    private void SetRelativeSlot(int relativeSlotIndex)
     {
-        if (!context.performed)
-            return;
-
-        SetItemInSlot(0, "Carrot", "Age_0");
-
-        // Parse the input value to get the relative slot index
-        int relativeSlotIndex = int.Parse(context.action.name) - 1;
-
         SetActiveSlot(topSlotIndex + relativeSlotIndex);
     }
 
