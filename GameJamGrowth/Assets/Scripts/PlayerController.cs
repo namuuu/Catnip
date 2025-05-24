@@ -1,72 +1,63 @@
-using UnityEngine.InputSystem; 
 using UnityEngine;
-using System;
 
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb;
-    public float speed = 5f;
-    public float acceleration = 50f;
-    public float deceleration =  70f; 
-    public PlayerInput playerInput;
+    [Header("Movement Settings")]
+    [SerializeField]
+    [Tooltip("The speed of the player when not sprinting.")]
+    private float speed = 5f;
+    [SerializeField]
+    [Tooltip("The maximum speed of the player when sprinting.")]
+    private float maxSpeed = 7.5f; // Maximum speed when sprinting
+    [SerializeField] private float acceleration = 50f;
+    [SerializeField] private float deceleration = 70f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        if (rb == null)
-        {
-            Debug.LogError("Rigidbody2D component not found on the GameObject.");
-        }
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         HandleMovement();
-        rb.linearVelocity = v2; 
+        HandleFacing();
+        rb.linearVelocity = nextVelocity;
     }
 
-    private Vector2 v1; // Desired velocity
-    private Vector2 v2; // Next velocity
+    private Vector2 desiredVelocity; // Desired velocity
+    private Vector2 nextVelocity; // Next velocity
 
-    void HandleMovement()
+    private void HandleMovement()
     {
-        // Sprint 
-        playerInput = GetComponent<PlayerInput>();
-        if (playerInput.actions["Sprint"].IsPressed())
-        {
-            speed = 7.5f; // Sprint speed
-        }
-        else
-        {
-            speed = 5f; // Normal speed
-        }
+        Vector2 currentVelocity = rb.linearVelocity;
 
-        // Speed and acceleration
-        Vector2 currentVelocity = rb.linearVelocity; 
-        v1 = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * speed;
+        // Calculate the desired velocity based on input
+        desiredVelocity = InputPolling.movement * (InputPolling.sprint ? maxSpeed : speed);
 
-        v2.x = Mathf.MoveTowards(
-            currentVelocity.x, 
-            v1.x, 
-            Time.fixedDeltaTime * (Mathf.Abs(v1.x) > Mathf.Abs(currentVelocity.x) ? acceleration : deceleration)
+        // Calculate x velocity
+        nextVelocity.x = Mathf.MoveTowards(
+            currentVelocity.x,
+            desiredVelocity.x,
+            Time.fixedDeltaTime * (Mathf.Abs(desiredVelocity.x) > Mathf.Abs(currentVelocity.x) ? acceleration : deceleration)
         );
 
-        v2.y = Mathf.MoveTowards(
-            currentVelocity.y, 
-            v1.y, 
-            Time.fixedDeltaTime * (Mathf.Abs(v1.y) > Mathf.Abs(currentVelocity.y) ? acceleration : deceleration)
+        // Calculate y velocity
+        nextVelocity.y = Mathf.MoveTowards(
+            currentVelocity.y,
+            desiredVelocity.y,
+            Time.fixedDeltaTime * (Mathf.Abs(desiredVelocity.y) > Mathf.Abs(currentVelocity.y) ? acceleration : deceleration)
         );
+    }
 
+    private void HandleFacing()
+    {
         // Character rotation
-        if (v2.x > 0)
-        {
+        if (nextVelocity.x > 0)
             transform.localScale = new Vector3(1, 1, 1);
-        }
-        else if (v2.x < 0)
-        {
+        else if (nextVelocity.x < 0)
             transform.localScale = new Vector3(-1, 1, 1);
-        }
     }
 }
