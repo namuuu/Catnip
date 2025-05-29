@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
 public abstract class Plantation
 {
@@ -6,23 +7,20 @@ public abstract class Plantation
     public int x;
     public int y;
 
+    protected SpriteResolver spriteResolver;
+
+    protected float burriedTime = 0f; // Time since the crop was planted
+
     public GameObject GameObject { get; }
 
-    protected Plantation(GameObject gameObject, int x, int y)
+    public Plantation(GameObject gameObject, int x, int y)
     {
         GameObject = gameObject;
+        spriteResolver = gameObject.GetComponent<SpriteResolver>();
+        burriedTime = PlantationController.time; // Initialize with the current game time
         this.x = x;
         this.y = y;
     }
 
-    protected Plantation()
-    {
-
-    }
-
-    public void Update()
-    {
-        // This method can be overridden by derived classes to implement specific update logic
-        // For example, checking if the plantation is ready for harvesting or needs watering
-    }
+    public abstract void Update();
 }

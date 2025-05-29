@@ -20,6 +20,19 @@ public class SlotController : MonoBehaviour
     private int topSlotIndex = 0;
     private GameObject[] hotbarSlots;
 
+    public static SlotController instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void OnEnable()
     {
@@ -119,17 +132,17 @@ public class SlotController : MonoBehaviour
     {
         GameObject slot = hotbarSlots[index];
         Sprite sprite = spriteLibraryAsset.GetSprite(category, label);
-        sprite.name = category + "_" + label;
+        sprite.name = category + ":" + label;
         slot.GetComponentsInChildren<Image>()[1].sprite = sprite;
     }
 
-    private string GetItemInSlot(int index)
+    public string GetItemInSlot(int index)
     {
         GameObject slot = hotbarSlots[index];
         return slot.GetComponentsInChildren<Image>()[1].sprite.name;
     }
 
-    private string GetActiveItem()
+    public string GetActiveItem()
     {
         return GetItemInSlot(currentSlotIndex);
     }

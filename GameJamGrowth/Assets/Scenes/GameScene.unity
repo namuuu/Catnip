@@ -775,6 +775,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slot
       objectReference: {fileID: 0}
+    - target: {fileID: 7923473065446389905, guid: fb3eb4e48e7d4ce4bbfb1a20b9986c42, type: 3}
+      propertyPath: m_SpriteLibraryAsset
+      value: 
+      objectReference: {fileID: 7108339969198208228, guid: dcc9d349008cd964dbbbd7a714152114, type: 3}
     - target: {fileID: 8224863597151583096, guid: fb3eb4e48e7d4ce4bbfb1a20b9986c42, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1047,6 +1051,51 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!1 &691195227
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 691195229}
+  - component: {fileID: 691195228}
+  m_Layer: 0
+  m_Name: PlantationController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &691195228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 691195227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4699fc8ee5268574599c1d2a1b230a4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  plantationPrefab: {fileID: 2772048879618190048, guid: 83df18ad149642a4f809682293975d1e, type: 3}
+--- !u!4 &691195229
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 691195227}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 710.7426, y: 351.94482, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1012470602 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8224863597151583096, guid: fb3eb4e48e7d4ce4bbfb1a20b9986c42, type: 3}
@@ -1469,6 +1518,7 @@ GameObject:
   - component: {fileID: 1535853440}
   - component: {fileID: 1535853439}
   - component: {fileID: 1535853441}
+  - component: {fileID: 1535853442}
   m_Layer: 0
   m_Name: character
   m_TagString: Untagged
@@ -1586,9 +1636,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  maxSpeed: 7.5
   acceleration: 50
   deceleration: 70
-  playerInput: {fileID: 1535853440}
 --- !u!114 &1535853440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1656,6 +1706,19 @@ CapsuleCollider2D:
   m_Offset: {x: 0.053812742, y: 0.103782}
   m_Size: {x: 0.93911695, y: 1.3004321}
   m_Direction: 0
+--- !u!114 &1535853442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535853435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fbfa3e2d1bd93e4187d4b239fcf1cf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInput: {fileID: 1535853440}
 --- !u!1 &1611976039
 GameObject:
   m_ObjectHideFlags: 0
@@ -2102,3 +2165,4 @@ SceneRoots:
   - {fileID: 1738124371}
   - {fileID: 84576728}
   - {fileID: 458761913}
+  - {fileID: 691195229}
