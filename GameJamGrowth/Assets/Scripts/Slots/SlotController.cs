@@ -12,6 +12,7 @@ public class SlotController : MonoBehaviour
     public GameObject hotbar;
     private Vector3 hotbarOrigin;
     public SpriteLibraryAsset spriteLibraryAsset;
+    [SerializeField] private GameObject hotbarSlotPrefab;
 
     [Header("Hotbar Settings")]
     public const int HOTBAR_DISPLAY_MAX = 5;
@@ -92,37 +93,37 @@ public class SlotController : MonoBehaviour
         if (index < 0 || index >= hotbarSlots.Length)
             return;
 
-        MoveToActiveSlot(index);
-
         // Change previous slot to color white
         hotbarSlots[currentSlotIndex].GetComponent<Image>().color = Color.white;
 
         // Change current slot to color red
         hotbarSlots[index].GetComponent<Image>().color = Color.red;
         currentSlotIndex = index;
+
+        MoveToActiveSlot();
     }
 
     // Slides the hotbar so the active slot is in the middle of the screen
-    private void MoveToActiveSlot(int index)
+    private void MoveToActiveSlot()
     {
         // Check if the index is out of bounds (lower bound)
-        if (index + 1 >= topSlotIndex + HOTBAR_DISPLAY_MAX)
+        if (currentSlotIndex + 1 >= topSlotIndex + HOTBAR_DISPLAY_MAX)
         {
             // Is it the last slot?
-            if (index == hotbarSlots.Length - 1)
-                topSlotIndex = index - HOTBAR_DISPLAY_MAX + 1;
+            if (currentSlotIndex == hotbarSlots.Length - 1)
+                topSlotIndex = currentSlotIndex - HOTBAR_DISPLAY_MAX + 1;
             else
-                topSlotIndex = index - HOTBAR_DISPLAY_MAX + 2;
+                topSlotIndex = currentSlotIndex - HOTBAR_DISPLAY_MAX + 2;
         }
 
         // Check if the index is out of bounds (upper bound)
-        if (index <= topSlotIndex)
+        if (currentSlotIndex <= topSlotIndex)
         {
             // Is it the first slot?
-            if (index == 0)
-                topSlotIndex = index;
+            if (currentSlotIndex == 0)
+                topSlotIndex = currentSlotIndex;
             else
-                topSlotIndex = index - 1;
+                topSlotIndex = currentSlotIndex - 1;
         }
 
         hotbar.transform.DOMoveY(hotbarOrigin.y + topSlotIndex * PADDING, 0.5f);
@@ -145,5 +146,42 @@ public class SlotController : MonoBehaviour
     public string GetActiveItem()
     {
         return GetItemInSlot(currentSlotIndex);
+    }
+
+    public void AddSlot(string category, string label)
+    {
+        // Check if the hotbar is full
+        if (hotbarSlots.Length >= HOTBAR_DISPLAY_MAX)
+        {
+            Debug.LogWarning("Hotbar is full. Cannot add more slots.");
+            return;
+        }
+
+        // Create a new slot
+        GameObject newSlot = Instantiate(hotbarSlotPrefab, hotbar.transform);
+        newSlot.tag = "Slot";
+
+        // Add the new slot to the hotbar slots array
+        System.Array.Resize(ref hotbarSlots, hotbarSlots.Length + 1);
+        hotbarSlots[^1] = newSlot;
+
+        // Set the item in the new slot
+        SetItemInSlot(hotbarSlots.Length - 1, category, label);
+
+        // Move the hotbar to the active slot
+        MoveToActiveSlot();
+    }
+
+    // TODO : test this
+    public void RemoveSlot(int index)
+    {
+        GameObject slot = hotbarSlots[index];
+        Destroy(slot);
+
+        // Check if the removed slot was the active slot
+        if (index == currentSlotIndex)
+        {
+            SetActiveSlot(currentSlotIndex);
+        }
     }
 }

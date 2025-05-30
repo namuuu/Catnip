@@ -2,6 +2,7 @@ using UnityEngine;
 
 class CarrotSeed : Item
 {
+
     public CarrotSeed() : base("Carrot seed", "carrot_seed", "A crunchy carrot.", ItemType.Seed)
     {
     }
