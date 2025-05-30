@@ -25,4 +25,6 @@ public abstract class Plantation
     }
 
     public abstract void Update();
+
+    public abstract bool Harvest();
 }

@@ -38,4 +38,15 @@ public class WheatCrop : Plantation
             }
         }
     }
+
+    public override bool Harvest()
+    {
+        if (growthStage < maxGrowthStage)
+        {
+            Debug.Log("Wheat crop is not ready for harvest yet.");
+            return false; // Crop is not ready for harvest
+        }
+        
+        return true; // Harvest successful
+    }
 }
