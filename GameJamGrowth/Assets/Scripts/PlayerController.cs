@@ -76,22 +76,18 @@ public class PlayerController : MonoBehaviour
 
     private void HandleInteract()
     {
-        // // Handle interaction logic here
-        // Debug.Log("Interacting with the environment.");
-        // string itemName = SlotController.instance.GetActiveItem().Name;
+        // Handle interaction logic here
+        Debug.Log("Interacting with the environment.");
+        string itemId = SlotController.instance.GetActiveItem().Id;
 
-        // // TODO: Remove later, this is for testing purposes
-        // itemName = "Wheat:Age_0";
-
-        // PlantationController.instance.CreatePlantation(itemName, 0, 0);
-
-        // Handle inspection logic here
-        // You can add logic to inspect items or objects in the game
-        SlotController.instance.GiveItem("Carrot:Seed");
+        PlantationController.instance.CreatePlantation(itemId, 0, 0);
     }
 
     private void HandleInspect()
     {
-        
+        Debug.Log("Inspecting the environment.");
+        // Handle inspection logic here
+        // You can add logic to inspect items or objects in the game
+        SlotController.instance.GiveItem("Carrot:Seed");
     }
 }

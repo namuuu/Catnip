@@ -2,16 +2,16 @@
 
 using UnityEngine;
 
-public class WheatCrop : Plantation
+public class CarrotCrop : Plantation
 {
     private int growthStage = 1; // Represents the growth stage of the wheat crop
     private const int maxGrowthStage = 3; // Maximum growth stage for wheat
 
     private float growthTime = 5f;
 
-    public WheatCrop(GameObject gameObject, int x, int y) : base(gameObject, "Wheat", x, y)
+    public CarrotCrop(GameObject gameObject, int x, int y) : base(gameObject, "Carrot", x, y)
     {
-        Debug.Log($"Initializing WheatCrop at position ({x}, {y})");
+        Debug.Log($"Initializing {id} at position ({x}, {y})");
         spriteResolver.SetCategoryAndLabel(id, "Age_1");
     }
 
@@ -43,7 +43,7 @@ public class WheatCrop : Plantation
     {
         if (growthStage < maxGrowthStage)
         {
-            Debug.Log("Wheat crop is not ready for harvest yet.");
+            Debug.Log("Carrot crop is not ready for harvest yet.");
             return false; // Crop is not ready for harvest
         }
         
