@@ -163,6 +163,7 @@ public class SlotController : MonoBehaviour
         GameObject newSlot = Instantiate(hotbarSlotPrefab, hotbar.transform);
 
         // Add the new slot to the hotbar slots array
+        Debug.Log("Adding new slot for item: " + itemName);
 
         itemList.Add(ItemUtil.CreateItem(newSlot, itemName));
 

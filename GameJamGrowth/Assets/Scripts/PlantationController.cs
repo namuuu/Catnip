@@ -80,6 +80,10 @@ public class PlantationController : MonoBehaviour
                 WheatCrop newPlantation = new(newPlantationObject, x, y);
                 plantations.Add(newPlantation);
                 break;
+            case "Carrot":
+                CarrotCrop newCarrotPlantation = new(newPlantationObject, x, y);
+                plantations.Add(newCarrotPlantation);
+                break;
             // Add more cases for different plantation types as needed
             default:
                 Debug.LogWarning($"Unknown plantation type: {itemType}");
