@@ -31,11 +31,13 @@ public class PlayerController : MonoBehaviour
     void OnEnable()
     {
         InputPolling.OnInteract += HandleInteract;
+        InputPolling.OnInspect += HandleInspect;
     }
 
     void OnDisable()
     {
         InputPolling.OnInteract -= HandleInteract;
+        InputPolling.OnInspect -= HandleInspect;
     }
 
     private Vector2 desiredVelocity; // Desired velocity
@@ -74,13 +76,22 @@ public class PlayerController : MonoBehaviour
 
     private void HandleInteract()
     {
-        // Handle interaction logic here
-        Debug.Log("Interacting with the environment.");
-        string itemName = SlotController.instance.GetActiveItem();
+        // // Handle interaction logic here
+        // Debug.Log("Interacting with the environment.");
+        // string itemName = SlotController.instance.GetActiveItem().Name;
 
-        // TODO: Remove later, this is for testing purposes
-        itemName = "Wheat:Age_0";
+        // // TODO: Remove later, this is for testing purposes
+        // itemName = "Wheat:Age_0";
 
-        PlantationController.instance.CreatePlantation(itemName, 0, 0);
+        // PlantationController.instance.CreatePlantation(itemName, 0, 0);
+
+        // Handle inspection logic here
+        // You can add logic to inspect items or objects in the game
+        SlotController.instance.GiveItem("Carrot:Seed");
+    }
+
+    private void HandleInspect()
+    {
+        
     }
 }

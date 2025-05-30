@@ -434,6 +434,17 @@
                 },
                 {
                     "name": "",
+                    "id": "d0579d10-aad7-4ea1-89e0-3c1be85286e6",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Inspect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "e036adfe-b550-4b4f-8345-c6a5906efe87",
                     "path": "<Keyboard>/1",
                     "interactions": "",
