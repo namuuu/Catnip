@@ -61,6 +61,7 @@ public class InputPolling : MonoBehaviour
     private void Update()
     {
         sprint = playerInput.actions["Sprint"].IsPressed();
+
         movement = playerInput.actions["Move"].ReadValue<Vector2>();
     }
 

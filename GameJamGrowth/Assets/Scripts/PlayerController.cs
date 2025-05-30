@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.XR;
 
 public class PlayerController : MonoBehaviour
 {
@@ -25,6 +26,16 @@ public class PlayerController : MonoBehaviour
         HandleMovement();
         HandleFacing();
         rb.linearVelocity = nextVelocity;
+    }
+
+    void OnEnable()
+    {
+        InputPolling.OnInteract += HandleInteract;
+    }
+
+    void OnDisable()
+    {
+        InputPolling.OnInteract -= HandleInteract;
     }
 
     private Vector2 desiredVelocity; // Desired velocity
@@ -59,5 +70,17 @@ public class PlayerController : MonoBehaviour
             transform.localScale = new Vector3(1, 1, 1);
         else if (nextVelocity.x < 0)
             transform.localScale = new Vector3(-1, 1, 1);
+    }
+
+    private void HandleInteract()
+    {
+        // Handle interaction logic here
+        Debug.Log("Interacting with the environment.");
+        string itemName = SlotController.instance.GetActiveItem();
+
+        // TODO: Remove later, this is for testing purposes
+        itemName = "Wheat:Age_0";
+
+        PlantationController.instance.CreatePlantation(itemName, 0, 0);
     }
 }
