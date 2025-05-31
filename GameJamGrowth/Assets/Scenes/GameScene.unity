@@ -2929,7 +2929,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 3.9761565
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2973,12 +2973,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowDebugText: 0
-  ShowCameraFrustum: 1
+  ShowCameraFrustum: 0
   IgnoreTimeScale: 0
   WorldUpOverride: {fileID: 0}
   ChannelMask: -1
   UpdateMethod: 2
-  BlendUpdateMethod: 1
+  BlendUpdateMethod: 0
   LensModeOverride:
     Enabled: 0
     DefaultMode: 2
@@ -3491,7 +3491,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 60
-    OrthographicSize: 3.9761565
+    OrthographicSize: 6
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -3524,6 +3524,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1738124372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1738124369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b617507da6d07e749b7efdb34e1173e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TrackerSettings:
+    BindingMode: 4
+    PositionDamping: {x: 1, y: 1, z: 1}
+    AngularDampingMode: 0
+    RotationDamping: {x: 1, y: 1, z: 1}
+    QuaternionDamping: 1
+  FollowOffset: {x: 0, y: 0, z: -10}
 --- !u!1 &1782408874
 GameObject:
   m_ObjectHideFlags: 0
@@ -3557,9 +3576,9 @@ MonoBehaviour:
   mapHeight: 100
   noiseScale: 0.1
   tilemap: {fileID: 112773733}
-  grassTile: {fileID: 11400000, guid: 624f97cdd1aa82d4ca36787d6e2fe07f, type: 2}
-  waterTile: {fileID: 11400000, guid: 874f36e6e97f7e446a94d9953e5f025e, type: 2}
-  rockTile: {fileID: 11400000, guid: 8646f108ea76d0747ad8db63d9f54983, type: 2}
+  grassTile: {fileID: 11400000, guid: 421a79bd4829e06439c3ab2c1ff54277, type: 2}
+  waterTile: {fileID: 11400000, guid: 86607fbeca885214f9455cfd94ca6d0c, type: 2}
+  rockTile: {fileID: 11400000, guid: 874f36e6e97f7e446a94d9953e5f025e, type: 2}
 --- !u!4 &1782408876
 Transform:
   m_ObjectHideFlags: 0
@@ -3575,19 +3594,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_GameObject: {fileID: 1738124369}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b617507da6d07e749b7efdb34e1173e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TrackerSettings:
-    BindingMode: 4
-    PositionDamping: {x: 0, y: 0, z: 0}
-    AngularDampingMode: 0
-    RotationDamping: {x: 1, y: 1, z: 1}
-    QuaternionDamping: 1
-  FollowOffset: {x: 0, y: 0, z: -10}
 --- !u!224 &1816102086 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8224863597151583096, guid: fb3eb4e48e7d4ce4bbfb1a20b9986c42, type: 3}
