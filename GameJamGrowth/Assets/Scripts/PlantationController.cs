@@ -6,7 +6,7 @@ using UnityEngine.InputSystem.Controls;
 
 public class PlantationController : MonoBehaviour
 {
-    [SerializeField] private List<Plantation> plantations = new List<Plantation>();
+    [SerializeField] public List<Plantation> plantations = new();
 
     [Tooltip("Prefab for creating new plantations.")]
     [SerializeField] private GameObject plantationPrefab;
@@ -34,11 +34,6 @@ public class PlantationController : MonoBehaviour
         {
             // Example: plantation.Initialize();
         }
-    }
-
-    private void OnEnable()
-    {
-
     }
 
     private void Update()
@@ -89,7 +84,5 @@ public class PlantationController : MonoBehaviour
                 Debug.LogWarning($"Unknown plantation type: {itemType}");
                 return; // Exit if the type is unknown
         }
-
-        
     }
 }

@@ -42,5 +42,26 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Grass
+    uniqueID: 4048492279
+    locked: 0
+  - name: Terrain (Water, Mountain)
+    uniqueID: 2690920655
+    locked: 0
+  - name: Farmland
+    uniqueID: 1168827713
+    locked: 0
+  - name: Structures
+    uniqueID: 2043063951
+    locked: 0
+  - name: Crops
+    uniqueID: 3089590831
+    locked: 0
+  - name: Character
+    uniqueID: 1488161257
+    locked: 0
+  - name: Harvestables
+    uniqueID: 2325512869
+    locked: 0
   m_RenderingLayers:
   - Default

@@ -46,7 +46,13 @@ public class CarrotCrop : Plantation
             Debug.Log("Carrot crop is not ready for harvest yet.");
             return false; // Crop is not ready for harvest
         }
-        
+
         return true; // Harvest successful
+    }
+    
+    public override void Delete()
+    {
+        BaseDelete(); // Call the base delete method to handle common deletion logic
+        Debug.Log($"Carrot crop at ({x}, {y}) deleted.");
     }
 }
