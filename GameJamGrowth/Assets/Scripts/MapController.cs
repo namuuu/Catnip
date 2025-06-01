@@ -6,8 +6,8 @@ public class MapController : MonoBehaviour
 {
 
     [Header("Map Generation Settings")]
-    [SerializeField] private int mapWidth = 100;
-    [SerializeField] private int mapHeight = 100;
+    [SerializeField] public int mapWidth = 100;
+    [SerializeField] public int mapHeight = 100;
     [SerializeField] private float noiseScale = 0.1f; // Scale for Perlin noise
 
     [Header("References")]
@@ -20,6 +20,25 @@ public class MapController : MonoBehaviour
 
     public static TileType[,] TileMap { get; private set; }
     public static Plantation[,] Plantations { get; private set; }
+
+    // instance
+    public static MapController instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+
+        // Initialize the TileMap array
+        TileMap = new TileType[mapWidth, mapHeight];
+        Plantations = new Plantation[mapWidth, mapHeight];
+    }
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
