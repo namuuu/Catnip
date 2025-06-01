@@ -22,9 +22,20 @@ public abstract class Plantation
         this.x = x;
         this.y = y;
         this.id = id;
+
+        MapController.Plantations[x, y] = this; // Register the plantation in the map controller
     }
 
     public abstract void Update();
 
     public abstract bool Harvest();
+
+    public abstract void Delete();
+
+    protected void BaseDelete()
+    {
+        GameObject.SetActive(false);
+        MapController.Plantations[x, y] = null; // Remove the plantation from the map controller
+        PlantationController.instance.plantations.Remove(this); // Remove from the plantation controller
+    }
 }
