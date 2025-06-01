@@ -9,7 +9,7 @@ public class PlantationController : MonoBehaviour
     [SerializeField] public List<Plantation> plantations = new();
 
     [Tooltip("Prefab for creating new plantations.")]
-    [SerializeField] private GameObject plantationPrefab;
+    [SerializeField] public GameObject plantationPrefab;
 
     public static PlantationController instance;
 

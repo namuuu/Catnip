@@ -15,6 +15,12 @@ public class WheatCrop : Plantation
         spriteResolver.SetCategoryAndLabel(id, "Age_1");
     }
 
+    public override bool ValidatePlant()
+    {
+        return PlantValidationUtil.IsFreeFarmland(x, y)
+            && PlantValidationUtil.IsWithinBounds(x, y);
+    }
+
     public override void Update()
     {
         // Implement specific update logic for WheatCrop

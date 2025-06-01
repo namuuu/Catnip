@@ -23,8 +23,12 @@ public abstract class Plantation
         this.y = y;
         this.id = id;
 
+        ValidatePlant();
+
         MapController.Plantations[x, y] = this; // Register the plantation in the map controller
     }
+
+    public abstract bool ValidatePlant();
 
     public abstract void Update();
 
